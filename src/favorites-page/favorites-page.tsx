@@ -1,4 +1,4 @@
-﻿export function Favourites() {
+﻿function FavoritesPage() {
   return (
     <div className="page">
       <header className="header">
@@ -225,3 +225,5 @@
     </div>
   );
 }
+
+export default FavoritesPage;

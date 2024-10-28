@@ -1,10 +1,11 @@
-﻿import OfferCard from '../offer-card/offer-card.tsx';
+﻿import OfferList from '../offer-list/offer-list.tsx';
+import {PreviewOffer} from '../types/previewOffer.ts';
 
 type MainPageProps = {
-  offerCardsCount: number;
+  offers: PreviewOffer[];
 }
 
-function MainPage({offerCardsCount}: MainPageProps): JSX.Element {
+function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -87,7 +88,7 @@ function MainPage({offerCardsCount}: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -114,19 +115,7 @@ function MainPage({offerCardsCount}: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {[...Array(offerCardsCount).keys()].map((index) => (
-                  <OfferCard
-                    key={index}
-                    isPremium
-                    imageSrc={'img/apartment-01.jpg'}
-                    price={120}
-                    rating={4}
-                    placeName={'Beautiful & luxurious apartment at great location'}
-                    placeType={'Apartment'}
-                  />
-                ))}
-              </div>
+              <OfferList offers = {offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"/>

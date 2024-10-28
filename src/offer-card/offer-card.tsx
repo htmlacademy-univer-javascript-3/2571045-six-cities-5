@@ -1,29 +1,44 @@
-﻿type OfferCardProps = {
-  isPremium: boolean;
-  imageSrc: string;
-  price: number;
-  rating: number;
-  placeName: string;
-  placeType: string;
-}
+﻿import {OfferTypes} from '../types/offer.ts';
+import {City} from '../types/city.ts';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../const.tsx';
 
-export default function OfferCard({isPremium, imageSrc, price, rating, placeName, placeType}: OfferCardProps): JSX.Element {
+type CardTypes = 'CitiesCard' | 'FavoritesCard';
+type OfferCardProps = {
+  id: string;
+  type: OfferTypes;
+  price: number;
+  city: City;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+  cardType: CardTypes;
+  onChangeActiveCardId?: (id: string | null) => void;
+};
+
+export default function OfferCard({id, isPremium, previewImage, price, rating, city, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
+  const urlSingleOffer = AppRoute.Offer.replace(':id', id);
+
   return (
-    <article className="cities__card place-card">
-      {isPremium ?
+    <article
+      className={cardType === 'CitiesCard' ? 'cities__card place-card' : 'favorites__card place-card'}
+      onMouseOver={() => onChangeActiveCardId && onChangeActiveCardId(id)}
+      onMouseLeave={() => onChangeActiveCardId && onChangeActiveCardId(null)}
+    >
+      {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : null}
+        </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={urlSingleOffer}>
           <img
             className="place-card__image"
-            src={imageSrc}
+            src={previewImage}
             width={260}
             height={200}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -45,9 +60,9 @@ export default function OfferCard({isPremium, imageSrc, price, rating, placeName
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeName}</a>
+          <Link to={urlSingleOffer}>{city.name}</Link>
         </h2>
-        <p className="place-card__type">{placeType}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

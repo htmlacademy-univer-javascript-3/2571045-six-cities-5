@@ -2,6 +2,7 @@
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
+  Root = '/',
 }
 
 export enum AuthorizationStatus {

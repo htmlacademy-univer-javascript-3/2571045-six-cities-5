@@ -12,10 +12,10 @@ import {ReviewsMock} from '../mocks/reviews.ts';
 
 type AppScreenProps = {
   offers : PreviewOffer[];
-  offer: Offer;
+  fullOffers: Offer[];
 }
 
-function App({offers, offer} : AppScreenProps): JSX.Element {
+function App({offers, fullOffers} : AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -35,7 +35,7 @@ function App({offers, offer} : AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage offer={offer} initialReviews={ReviewsMock}/>} />
+        <Route path={AppRoute.Offer} element={<OfferPage offers={fullOffers} initialReviews={ReviewsMock}/>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

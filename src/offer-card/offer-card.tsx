@@ -1,14 +1,13 @@
 ﻿import {OfferTypes} from '../types/offer.ts';
-import {City} from '../types/city.ts';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.tsx';
 
 type CardTypes = 'CitiesCard' | 'FavoritesCard';
 type OfferCardProps = {
   id: string;
+  title: string;
   type: OfferTypes;
   price: number;
-  city: City;
   isPremium: boolean;
   rating: number;
   previewImage: string;
@@ -16,7 +15,7 @@ type OfferCardProps = {
   onChangeActiveCardId?: (id: string | null) => void;
 };
 
-export default function OfferCard({id, isPremium, previewImage, price, rating, city, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
+export default function OfferCard({id, isPremium, previewImage, price, rating, title, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
   const urlSingleOffer = AppRoute.Offer.replace(':id', id);
 
   return (
@@ -60,7 +59,7 @@ export default function OfferCard({id, isPremium, previewImage, price, rating, c
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={urlSingleOffer}>{city.name}</Link>
+          <Link to={urlSingleOffer}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

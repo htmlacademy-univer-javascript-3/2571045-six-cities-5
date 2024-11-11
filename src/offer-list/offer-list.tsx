@@ -1,14 +1,13 @@
 ﻿import OfferCard from '../offer-card/offer-card.tsx';
-import {useState} from 'react';
 import {Nullable} from 'vitest';
 import {PreviewOffer} from '../types/previewOffer.ts';
 
 type OfferListProps = {
   offers: PreviewOffer[];
+  onItemHover?: (id: Nullable<string>) => void;
 }
 
-function OfferList({offers}: OfferListProps): JSX.Element {
-  const [, setActiveCard] = useState<Nullable<string>>();
+function OfferList({offers, onItemHover}: OfferListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -17,7 +16,7 @@ function OfferList({offers}: OfferListProps): JSX.Element {
           {...offer}
           key={offer.id}
           cardType='CitiesCard'
-          onChangeActiveCardId={(id) => setActiveCard(id)}
+          onChangeActiveCardId={(id) => onItemHover?.call(null, id)}
         />
       ))}
     </div>

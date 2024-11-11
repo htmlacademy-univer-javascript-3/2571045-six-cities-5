@@ -9,19 +9,21 @@ import FavoritesPage from '../favorites-page/favorites-page.tsx';
 import {PreviewOffer} from '../types/previewOffer.ts';
 import {Offer} from '../types/offer.ts';
 import {ReviewsMock} from '../mocks/reviews.ts';
+import {City} from '../types/city.ts';
 
 type AppScreenProps = {
   offers : PreviewOffer[];
-  offer: Offer;
+  fullOffers: Offer[];
+  cities: City[];
 }
 
-function App({offers, offer} : AppScreenProps): JSX.Element {
+function App({offers, fullOffers, cities} : AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offers={offers}/>}
+          element={<MainPage offers={offers} defaultCity={cities.find((c) => c.name === 'Amsterdam') ?? cities[0]}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -35,7 +37,7 @@ function App({offers, offer} : AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage offer={offer} initialReviews={ReviewsMock}/>} />
+        <Route path={AppRoute.Offer} element={<OfferPage offers={fullOffers} initialReviews={ReviewsMock}/>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

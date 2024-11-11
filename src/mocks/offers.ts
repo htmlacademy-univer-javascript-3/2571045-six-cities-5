@@ -9,14 +9,14 @@ export const OffersMock : PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 40.7128,
-        longitude: -74.0060,
+        latitude: 52.377956,
+        longitude: 4.897070,
         zoom: 12
       }
     },
     location: {
-      latitude: 40.7128,
-      longitude: -74.0060,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 12
     },
     isFavorite: true,
@@ -32,14 +32,14 @@ export const OffersMock : PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 34.0522,
-        longitude: -118.2437,
+        latitude: 52.377956,
+        longitude: 4.897070,
         zoom: 12
       }
     },
     location: {
-      latitude: 34.0522,
-      longitude: -118.2437,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 12
     },
     isFavorite: false,
@@ -55,14 +55,14 @@ export const OffersMock : PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 51.5074,
-        longitude: -0.1278,
+        latitude: 52.377956,
+        longitude: 4.897070,
         zoom: 12
       }
     },
     location: {
-      latitude: 51.5074,
-      longitude: -0.1278,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 12
     },
     isFavorite: true,
@@ -78,14 +78,14 @@ export const OffersMock : PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 48.8566,
-        longitude: 2.3522,
+        latitude: 52.377956,
+        longitude: 4.897070,
         zoom: 12
       }
     },
     location: {
-      latitude: 48.8566,
-      longitude: 2.3522,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 12
     },
     isFavorite: false,

@@ -3,18 +3,27 @@ import {ReviewForm} from '../review-form/review-form.tsx';
 import {Review} from '../types/review.ts';
 import {useState} from 'react';
 import {ReviewCard} from '../review-card/review-card.tsx';
+import {useParams} from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page.tsx';
 
 type OfferPageProps = {
   initialReviews: Review[];
-  offer: Offer;
+  offers: Offer[];
 }
 
-export function OfferPage({initialReviews, offer}: OfferPageProps){
+export function OfferPage({initialReviews, offers}: OfferPageProps){
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
 
   const addReview = (newReview: Review) => {
     setReviews((prevReviews) => [...prevReviews, newReview]);
   };
+
+  const params = useParams();
+  const offer = offers.find((o) => o.id === params.id);
+
+  if (!offer){
+    return (<NotFoundPage/>);
+  }
 
   return (
     <div className="page">
@@ -61,10 +70,12 @@ export function OfferPage({initialReviews, offer}: OfferPageProps){
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                offer.images.map((image, i) =>
-                  (<div className="offer__image-wrapper" key={i}>
-                    <img className="offer__image" src={image} alt="Photo studio" />
-                  </div>))
+                offer.images.map((image) =>
+                  (
+                    <div className="offer__image-wrapper" key={image}>
+                      <img className="offer__image" src={image} alt="Photo studio" />
+                    </div>)
+                )
               }
             </div>
           </div>
@@ -108,7 +119,7 @@ export function OfferPage({initialReviews, offer}: OfferPageProps){
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.goods.map((good, i) => <li key={i} className="offer__inside-item">{good}</li>)}
+                  {offer.goods.map((good) => <li key={good} className="offer__inside-item">{good}</li>)}
                 </ul>
               </div>
               <div className="offer__host">
@@ -137,7 +148,7 @@ export function OfferPage({initialReviews, offer}: OfferPageProps){
                   Reviews · <span className="reviews__amount">1</span>
                 </h2>
                 <ul className="reviews__list">
-                  {reviews.map((review, i) => <ReviewCard key={i} review={review} />)}
+                  {reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
                 </ul>
                 <ReviewForm onSubmit={addReview} />
               </section>

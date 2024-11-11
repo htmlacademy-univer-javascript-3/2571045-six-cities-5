@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.tsx';
 import {Nullable} from 'vitest';
 
-type CardTypes = 'CitiesCard' | 'FavoritesCard';
+type CardTypes = 'CitiesCard' | 'FavoritesCard' | 'NearbyCard';
 type OfferCardProps = {
   id: string;
   title: string;
@@ -19,9 +19,20 @@ type OfferCardProps = {
 export default function OfferCard({id, isPremium, previewImage, price, rating, title, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
   const urlSingleOffer = AppRoute.Offer.replace(':id', id);
 
+  const getCardClassName = (cType: CardTypes): string => {
+    switch (cType) {
+      case 'CitiesCard':
+        return 'cities__card place-card';
+      case 'FavoritesCard':
+        return 'favorites__card place-card';
+      default:
+        return 'near-places__card place-card';
+    }
+  };
+
   return (
     <article
-      className={cardType === 'CitiesCard' ? 'cities__card place-card' : 'favorites__card place-card'}
+      className={getCardClassName(cardType)}
       onMouseOver={() => onChangeActiveCardId?.call(null, id)}
       onMouseLeave={() => onChangeActiveCardId?.call(null, null)}
     >
@@ -29,7 +40,7 @@ export default function OfferCard({id, isPremium, previewImage, price, rating, t
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={cardType === 'NearbyCard' ? 'near-places__image-wrapper place-card__image-wrapper' : 'cities__image-wrapper place-card__image-wrapper'}>
         <Link to={urlSingleOffer}>
           <img
             className="place-card__image"

@@ -38,7 +38,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={5}
+          value={5}
           id="5-stars"
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
@@ -55,7 +55,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={4}
+          value={4}
           id="4-stars"
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
@@ -72,7 +72,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={3}
+          value={3}
           id="3-stars"
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
@@ -89,7 +89,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={2}
+          value={2}
           id="2-stars"
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
@@ -106,7 +106,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={1}
+          value={1}
           id="1-star"
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
@@ -126,7 +126,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={''}
+        value={comment}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setComment(event.target.value)}
       />
       <div className="reviews__button-wrapper">

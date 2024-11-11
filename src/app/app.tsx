@@ -37,7 +37,7 @@ function App({offers, fullOffers, cities} : AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage offers={fullOffers} initialReviews={ReviewsMock}/>} />
+        <Route path={AppRoute.Offer} element={<OfferPage offers={fullOffers} initialReviews={ReviewsMock} offersNearby={offers.slice(0, 3)}/>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

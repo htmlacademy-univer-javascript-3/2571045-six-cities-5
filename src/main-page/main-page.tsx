@@ -1,11 +1,19 @@
 ﻿import OfferList from '../offer-list/offer-list.tsx';
 import {PreviewOffer} from '../types/previewOffer.ts';
+import {City} from '../types/city.ts';
+import {Nullable} from 'vitest';
+import {useState} from 'react';
+import {Map} from '../map/map.tsx';
 
 type MainPageProps = {
   offers: PreviewOffer[];
+  defaultCity: City;
 }
 
-function MainPage({offers}: MainPageProps): JSX.Element {
+function MainPage({offers, defaultCity}: MainPageProps): JSX.Element {
+  const points = offers.map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
+  const [selectedId, setSelectedId] = useState<Nullable<string>>();
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -115,10 +123,16 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferList offers = {offers}/>
+              <OfferList offers = {offers} onItemHover={setSelectedId}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"/>
+              <section className="cities__map map">
+                <Map
+                  city={defaultCity}
+                  points={points}
+                  selectedPoint={points.find((p) => p.title === selectedId)}
+                />
+              </section>
             </div>
           </div>
         </div>

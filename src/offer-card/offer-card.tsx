@@ -1,6 +1,7 @@
 ﻿import {OfferTypes} from '../types/offer.ts';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.tsx';
+import {Nullable} from 'vitest';
 
 type CardTypes = 'CitiesCard' | 'FavoritesCard';
 type OfferCardProps = {
@@ -12,7 +13,7 @@ type OfferCardProps = {
   rating: number;
   previewImage: string;
   cardType: CardTypes;
-  onChangeActiveCardId?: (id: string | null) => void;
+  onChangeActiveCardId?: (id: Nullable<string>) => void;
 };
 
 export default function OfferCard({id, isPremium, previewImage, price, rating, title, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
@@ -21,8 +22,8 @@ export default function OfferCard({id, isPremium, previewImage, price, rating, t
   return (
     <article
       className={cardType === 'CitiesCard' ? 'cities__card place-card' : 'favorites__card place-card'}
-      onMouseOver={() => onChangeActiveCardId && onChangeActiveCardId(id)}
-      onMouseLeave={() => onChangeActiveCardId && onChangeActiveCardId(null)}
+      onMouseOver={() => onChangeActiveCardId?.call(null, id)}
+      onMouseLeave={() => onChangeActiveCardId?.call(null, null)}
     >
       {isPremium &&
         <div className="place-card__mark">

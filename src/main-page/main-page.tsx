@@ -1,18 +1,41 @@
 ﻿import OfferList from '../offer-list/offer-list.tsx';
-import {PreviewOffer} from '../types/previewOffer.ts';
-import {City} from '../types/city.ts';
 import {Nullable} from 'vitest';
 import {useState} from 'react';
 import {Map} from '../map/map.tsx';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../hooks';
+import {Point} from '../types/point.ts';
+import {setActiveCity} from '../store/action.ts';
+import {CitiesList} from '../cities-list/cities-list.tsx';
+import {Cities} from '../const.tsx';
+import {CitiesMock} from '../mocks/cities.ts';
+import {City} from '../types/city.ts';
 
-type MainPageProps = {
-  offers: PreviewOffer[];
-  defaultCity: City;
-}
+function MainPage(): JSX.Element {
+  function getPlacesText(count: number): string {
+    if (count === 1) {
+      return 'place';
+    } else {
+      return 'places';
+    }
+  }
 
-function MainPage({offers, defaultCity}: MainPageProps): JSX.Element {
-  const points = offers.map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
-  const [selectedId, setSelectedId] = useState<Nullable<string>>();
+  const [selectedOfferId, setSelectedOfferId] = useState<Nullable<string>>();
+  const dispatch = useDispatch();
+  const activeCity = useAppSelector((state) => state.activeCity);
+  const activeOffers = useAppSelector((state) => state.offers);
+
+  const filteredOffers = activeOffers.filter((offer) => offer.city.name === activeCity.name);
+
+  const points: Point[] = filteredOffers.map((offer) => ({
+    title: offer.id,
+    lat: offer.location.latitude,
+    lng: offer.location.longitude
+  }));
+
+  const handleCityChange = (city: City) => {
+    dispatch(setActiveCity(city));
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -57,46 +80,13 @@ function MainPage({offers, defaultCity}: MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <CitiesList cities={Cities} activeCity={activeCity} onCityChange={handleCityChange} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffers.length} {getPlacesText(filteredOffers.length)} to stay in {activeCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -123,14 +113,14 @@ function MainPage({offers, defaultCity}: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferList offers = {offers} onItemHover={setSelectedId}/>
+              <OfferList offers = {filteredOffers} onItemHover={setSelectedOfferId}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={defaultCity}
+                  city={CitiesMock.find((city) => city.name === activeCity.name) ?? CitiesMock[0]}
                   points={points}
-                  selectedPoint={points.find((p) => p.title === selectedId)}
+                  selectedPoint={points.find((p) => p.title === selectedOfferId)}
                 />
               </section>
             </div>

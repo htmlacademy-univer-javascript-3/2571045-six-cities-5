@@ -7,18 +7,18 @@ import {useParams} from 'react-router-dom';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import {Map} from '../map/map.tsx';
 import {OffersNearbyList} from '../offers-nearby-list/offers-nearby-list.tsx';
-import {PreviewOffer} from '../types/previewOffer.ts';
 import {Nullable} from 'vitest';
+import {useAppSelector} from '../hooks';
 
 type OfferPageProps = {
   initialReviews: Review[];
   offers: Offer[];
-  offersNearby: PreviewOffer[];
 }
 
-export function OfferPage({initialReviews, offers, offersNearby}: OfferPageProps){
+export function OfferPage({initialReviews, offers}: OfferPageProps){
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [selectedId, setSelectedId] = useState<Nullable<string>>();
+  const offersNearby = useAppSelector((state) => state.offers).slice(0, 3);
 
   const addReview = (newReview: Review) => {
     setReviews((prevReviews) => [...prevReviews, newReview]);

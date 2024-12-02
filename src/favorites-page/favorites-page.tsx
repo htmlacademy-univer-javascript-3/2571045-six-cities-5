@@ -1,11 +1,10 @@
 ﻿import {FavoritesList} from '../favorites-list/favorites-list.tsx';
-import {PreviewOffer} from '../types/previewOffer.ts';
 
-type FavoritesPageProps = {
-  offers: PreviewOffer[];
-}
+import {useAppSelector} from '../hooks';
 
-function FavoritesPage({offers}: FavoritesPageProps) {
+function FavoritesPage() {
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <div className="page">
       <header className="header">

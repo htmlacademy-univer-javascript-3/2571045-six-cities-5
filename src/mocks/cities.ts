@@ -4,25 +4,25 @@ export const CitiesMock: City[] = [
   {
     name: 'Paris',
     location: {
-      latitude: 1,
-      longitude: 2,
-      zoom: 1,
+      latitude: 48.8534100,
+      longitude:  2.3488000,
+      zoom: 8,
     }
   },
   {
     name: 'Cologne',
     location: {
-      latitude: 1,
-      longitude: 2,
-      zoom: 1,
+      latitude: 50.9333,
+      longitude: 6.95,
+      zoom: 12,
     }
   },
   {
     name: 'Brussels',
     location: {
-      latitude: 1,
-      longitude: 2,
-      zoom: 1,
+      latitude: 50.8504,
+      longitude: 4.34878,
+      zoom: 12,
     }
   },
   {
@@ -36,17 +36,17 @@ export const CitiesMock: City[] = [
   {
     name: 'Hamburg',
     location: {
-      latitude: 1,
-      longitude: 2,
-      zoom: 1,
+      latitude: 53.5753,
+      longitude: 10.0153,
+      zoom: 12,
     }
   },
   {
     name: 'Dusseldorf',
     location: {
-      latitude: 1,
-      longitude: 2,
-      zoom: 1,
+      latitude: 51.2217,
+      longitude: 6.77616,
+      zoom: 12,
     }
   }
 ];

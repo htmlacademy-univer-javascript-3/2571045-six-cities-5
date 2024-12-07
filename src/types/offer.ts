@@ -2,7 +2,7 @@
 import {City} from './city.ts';
 import {User} from './user.ts';
 
-export type OfferTypes = 'Apartment' | 'Private Room';
+export type OfferTypes = 'Apartment' | 'Private Room' | 'Hotel' | 'House';
 
 export type Offer = {
   'id': string;

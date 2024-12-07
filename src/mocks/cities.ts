@@ -6,7 +6,7 @@ export const CitiesMock: City[] = [
     location: {
       latitude: 48.8534100,
       longitude:  2.3488000,
-      zoom: 8,
+      zoom: 12,
     }
   },
   {

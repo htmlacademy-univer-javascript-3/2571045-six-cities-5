@@ -57,7 +57,7 @@ function MainPage(): JSX.Element {
     setSortingMode(mode);
   };
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoadingStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isLoading);
   if (isOffersDataLoading) {
     return (
       <Spinner />

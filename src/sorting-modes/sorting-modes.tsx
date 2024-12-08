@@ -1,13 +1,13 @@
-﻿import {SORTING_MODE} from '../const.tsx';
-import {SortingMode} from '../types/sorting-mode.ts';
+﻿import {SortingMode} from '../types/sorting-mode.ts';
 import {useState} from 'react';
+import {SORTING_MODE} from '../const.tsx';
 
 type SortingModesProps = {
   onModeChange: (mode: SortingMode) => void;
 }
 
 export function SortingModes({ onModeChange }: SortingModesProps): JSX.Element {
-  const [activeMode, setActiveMode] = useState<SortingMode>(SORTING_MODE.Popular);
+  const [activeMode, setActiveMode] = useState<SortingMode>('Popular');
   const [isSortingModeVisible, setIsSortingModeVisible] = useState<boolean>(false);
 
   const handleClick = (mode: SortingMode) => {
@@ -30,7 +30,7 @@ export function SortingModes({ onModeChange }: SortingModesProps): JSX.Element {
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isSortingModeVisible ? 'places__options--opened' : ''}`}>
-        {Object.values(SORTING_MODE).map((option) => (
+        {SORTING_MODE.map((option) => (
           <li
             key={option}
             className={`places__option ${option === activeMode ? 'places__option--active' : ''}`}

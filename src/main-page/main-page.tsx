@@ -7,7 +7,7 @@ import {useAppSelector} from '../hooks';
 import {Point} from '../types/point.ts';
 import {setActiveCity} from '../store/action.ts';
 import {CitiesList} from '../cities-list/cities-list.tsx';
-import {Cities, SORTING_MODE} from '../const.tsx';
+import {Cities} from '../const.tsx';
 import {CitiesMock} from '../mocks/cities.ts';
 import {City} from '../types/city.ts';
 import {SortingMode} from '../types/sorting-mode.ts';
@@ -23,7 +23,7 @@ function MainPage(): JSX.Element {
   }
 
   const [selectedOfferId, setSelectedOfferId] = useState<Nullable<string>>();
-  const [sortingMode, setSortingMode] = useState<SortingMode>(SORTING_MODE.Popular);
+  const [sortingMode, setSortingMode] = useState<SortingMode>('Popular');
   const dispatch = useDispatch();
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeOffers = useAppSelector((state) => state.offers);

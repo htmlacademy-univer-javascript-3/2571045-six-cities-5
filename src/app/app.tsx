@@ -8,17 +8,20 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import FavoritesPage from '../favorites-page/favorites-page.tsx';
 import {Offer} from '../types/offer.ts';
 import {ReviewsMock} from '../mocks/reviews.ts';
-import {useAppDispatch} from '../hooks';
-import {setOffers} from '../store/action.ts';
-import {OffersMock} from '../mocks/offers.ts';
+import {useAppSelector} from '../hooks';
+import {Spinner} from '../spinner/spinner.tsx';
 
 type AppScreenProps = {
   fullOffers: Offer[];
 }
 
 function App({fullOffers} : AppScreenProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  dispatch(setOffers(OffersMock));
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoadingStatus);
+  if (isOffersDataLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <BrowserRouter>

@@ -19,7 +19,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;
-    })
+    });
 });
 
 export {reducer};

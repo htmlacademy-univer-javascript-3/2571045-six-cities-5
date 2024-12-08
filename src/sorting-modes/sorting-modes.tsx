@@ -1,6 +1,6 @@
 ﻿import {SortingMode} from '../types/sorting-mode.ts';
 import {useState} from 'react';
-import {SORTING_MODE} from '../const.tsx';
+import {SORTING_MODE} from '../const.ts';
 
 type SortingModesProps = {
   onModeChange: (mode: SortingMode) => void;

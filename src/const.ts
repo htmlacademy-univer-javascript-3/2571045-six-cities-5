@@ -25,4 +25,11 @@ export const SORTING_MODE: SortingMode[] = [
   'Price: low to high',
   'Price: high to low',
   'Top rated first',
-]
+];
+
+export enum APIRoute {
+  Offers = '/offers'
+}
+
+export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
+export const REQUEST_TIMEOUT = 5000;

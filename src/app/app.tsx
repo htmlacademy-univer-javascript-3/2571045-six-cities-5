@@ -1,6 +1,6 @@
 ﻿import MainPage from '../main-page/main-page.tsx';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../const.tsx';
+import {AppRoute, AuthorizationStatus} from '../const.ts';
 import LoginPage from '../login-page/login-page.tsx';
 import {OfferPage} from '../offer-page/offer-page.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';

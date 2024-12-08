@@ -1,6 +1,6 @@
 ﻿import {OfferTypes} from '../types/offer.ts';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../const.tsx';
+import {AppRoute} from '../const.ts';
 import {Nullable} from 'vitest';
 
 type CardTypes = 'CitiesCard' | 'FavoritesCard' | 'NearbyCard';

@@ -7,7 +7,7 @@ import {useAppSelector} from '../hooks';
 import {Point} from '../types/point.ts';
 import {setActiveCity} from '../store/action.ts';
 import {CitiesList} from '../cities-list/cities-list.tsx';
-import {Cities} from '../const.tsx';
+import {Cities} from '../const.ts';
 import {CitiesMock} from '../mocks/cities.ts';
 import {City} from '../types/city.ts';
 import {SortingMode} from '../types/sorting-mode.ts';

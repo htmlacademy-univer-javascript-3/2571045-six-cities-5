@@ -16,7 +16,7 @@ type AppScreenProps = {
 }
 
 function App({fullOffers} : AppScreenProps): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoadingStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isLoading);
   if (isOffersDataLoading) {
     return (
       <Spinner />

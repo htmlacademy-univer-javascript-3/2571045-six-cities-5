@@ -12,6 +12,7 @@ import {CitiesMock} from '../mocks/cities.ts';
 import {City} from '../types/city.ts';
 import {SortingMode} from '../types/sorting-mode.ts';
 import {SortingModes} from '../sorting-modes/sorting-modes.tsx';
+import {Spinner} from '../spinner/spinner.tsx';
 
 function MainPage(): JSX.Element {
   function getPlacesText(count: number): string {
@@ -55,6 +56,13 @@ function MainPage(): JSX.Element {
   const handleSortModeChange = (mode: SortingMode) => {
     setSortingMode(mode);
   };
+
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoadingStatus);
+  if (isOffersDataLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">

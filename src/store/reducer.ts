@@ -6,7 +6,7 @@ import {CitiesMock} from '../mocks/cities.ts';
 const initialState = {
   activeCity: CitiesMock.find((city) => city.name === 'Paris') ?? CitiesMock[0],
   offers: [] as PreviewOffer[],
-  isOffersLoadingStatus: false,
+  isLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -18,7 +18,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload;
     })
     .addCase(setLoadingStatus, (state, action) => {
-      state.isOffersLoadingStatus = action.payload;
+      state.isLoading = action.payload;
     })
 });
 

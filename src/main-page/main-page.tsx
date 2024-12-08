@@ -7,11 +7,12 @@ import {useAppSelector} from '../hooks';
 import {Point} from '../types/point.ts';
 import {setActiveCity} from '../store/action.ts';
 import {CitiesList} from '../cities-list/cities-list.tsx';
-import {Cities, SORTING_MODE} from '../const.tsx';
+import {Cities} from '../const.ts';
 import {CitiesMock} from '../mocks/cities.ts';
 import {City} from '../types/city.ts';
 import {SortingMode} from '../types/sorting-mode.ts';
 import {SortingModes} from '../sorting-modes/sorting-modes.tsx';
+import {Spinner} from '../spinner/spinner.tsx';
 
 function MainPage(): JSX.Element {
   function getPlacesText(count: number): string {
@@ -23,7 +24,7 @@ function MainPage(): JSX.Element {
   }
 
   const [selectedOfferId, setSelectedOfferId] = useState<Nullable<string>>();
-  const [sortingMode, setSortingMode] = useState<SortingMode>(SORTING_MODE.Popular);
+  const [sortingMode, setSortingMode] = useState<SortingMode>('Popular');
   const dispatch = useDispatch();
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeOffers = useAppSelector((state) => state.offers);
@@ -55,6 +56,13 @@ function MainPage(): JSX.Element {
   const handleSortModeChange = (mode: SortingMode) => {
     setSortingMode(mode);
   };
+
+  const isOffersDataLoading = useAppSelector((state) => state.isLoading);
+  if (isOffersDataLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">

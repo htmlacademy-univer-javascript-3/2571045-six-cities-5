@@ -3,7 +3,7 @@ import {PreviewOffer} from '../types/previewOffer.ts';
 import {City} from '../types/city.ts';
 import {AppDispatch, State} from '../types/state.ts';
 import {AxiosInstance} from 'axios';
-import {APIRoute} from '../modules/api.ts';
+import {APIRoute} from '../const.ts';
 
 export const setActiveCity = createAction<City>('setActiveCity');
 

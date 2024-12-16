@@ -4,7 +4,7 @@ function NotFoundPage(): JSX.Element {
   return (
     <div className="page not-found-page">
       <h2>404 Not Found</h2>
-      <Link to={'/'}>На главную</Link>
+      <Link to={'/public'}>На главную</Link>
     </div>
   );
 }

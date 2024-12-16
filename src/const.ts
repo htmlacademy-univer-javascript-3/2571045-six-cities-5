@@ -5,6 +5,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer/:id',
   Root = '/',
+  NotFound = '/not-found',
 }
 
 export enum AuthorizationStatus {
@@ -28,7 +29,12 @@ export const SORTING_MODE: SortingMode[] = [
 ];
 
 export enum APIRoute {
-  Offers = '/offers'
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Favorite = '/favorite',
+  Offer = '/offers/:id',
+  OffersNearby = '/offers/:id/nearby',
 }
 
 export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';

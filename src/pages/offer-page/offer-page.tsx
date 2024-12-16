@@ -1,83 +1,53 @@
-﻿import {Offer} from '../types/offer.ts';
-import {ReviewForm} from '../review-form/review-form.tsx';
-import {Review} from '../types/review.ts';
+﻿import {ReviewForm} from '../../review-form/review-form.tsx';
+import {Review} from '../../types/review.ts';
 import {useEffect, useState} from 'react';
-import {ReviewCard} from '../review-card/review-card.tsx';
-import {useParams} from 'react-router-dom';
-import NotFoundPage from '../not-found-page/not-found-page.tsx';
-import {Map} from '../map/map.tsx';
-import {OffersNearbyList} from '../offers-nearby-list/offers-nearby-list.tsx';
+import {ReviewCard} from '../../review-card/review-card.tsx';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Map} from '../../map/map.tsx';
+import {OffersNearbyList} from '../../offers-nearby-list/offers-nearby-list.tsx';
 import {Nullable} from 'vitest';
-import {useAppSelector} from '../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchOfferAction} from '../../store/action.ts';
+import {Spinner} from '../../spinner/spinner.tsx';
+import {AppRoute} from '../../const.ts';
+import {Header} from '../../header/header.tsx';
 
 type OfferPageProps = {
   initialReviews: Review[];
-  offers: Offer[];
 }
 
-export function OfferPage({initialReviews, offers}: OfferPageProps){
+export function OfferPage({initialReviews}: OfferPageProps){
+  const params = useParams();
+  const offerId = params.id;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [selectedId, setSelectedId] = useState<Nullable<string>>();
-  const offersNearby = useAppSelector((state) => state.offers).slice(0, 3);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const points = offersNearby.map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
 
   const addReview = (newReview: Review) => {
     setReviews((prevReviews) => [...prevReviews, newReview]);
   };
 
-  const params = useParams();
-  const offer = offers.find((o) => o.id === params.id);
-  const points = offersNearby.map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
-
   useEffect(() => {
-    if (offer) {
-      window.scrollTo(0, 0);
+    if (offerId) {
+      dispatch(fetchOfferAction(offerId))
+        .unwrap()
+        .catch(() => navigate(AppRoute.NotFound));
     }
-  }, [offer]);
+  }, [dispatch, navigate, offerId]);
 
-  if (!offer){
-    return (<NotFoundPage/>);
+  const offer = useAppSelector((state) => state.offer);
+
+  if (!offer) {
+    return (<Spinner />);
   }
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">

@@ -1,31 +1,29 @@
-﻿import OfferCard from '../offer-card/offer-card.tsx';
-import {PreviewOffer} from '../types/previewOffer.ts';
+﻿import {useAppDispatch, useAppSelector} from '../hooks';
+import {Cities} from '../const.ts';
+import {CityFavorites} from './city-favorites.tsx';
+import {CitiesNames} from '../types/city.ts';
+import {fetchFavoritesAction} from '../store/action.ts';
+import {useEffect} from 'react';
 
-type FavoritesListProps = {
-  offers: PreviewOffer[];
-}
+export function FavoritesList() {
+  const dispatch = useAppDispatch();
+  const offers = useAppSelector((state) => state.favorites);
 
-export function FavoritesList({offers}: FavoritesListProps) {
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch, offers]);
+
   return (
     <ul className="favorites__list">
-      <li className="favorites__locations-items">
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
-            </a>
-          </div>
-        </div>
-        <div className="favorites__places">
-          {offers.filter((offer) => offer.city.name === 'Amsterdam').map((offer) => (
-            <OfferCard
-              {...offer}
-              key={offer.id}
-              cardType='FavoritesCard'
-            />
-          ))}
-        </div>
-      </li>
+      {
+        Cities.map((currentCity) => (
+          <CityFavorites
+            key={currentCity}
+            city={currentCity as CitiesNames}
+            cityOffers={offers.filter((offer) => offer.city.name === currentCity)}
+          />
+        ))
+      }
     </ul>
   );
 }

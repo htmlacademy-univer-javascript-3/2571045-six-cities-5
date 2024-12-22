@@ -13,6 +13,7 @@ import {SortingMode} from '../../types/sorting-mode.ts';
 import {SortingModes} from '../../sorting-modes/sorting-modes.tsx';
 import {Spinner} from '../../spinner/spinner.tsx';
 import {Header} from '../../header/header.tsx';
+import {selectOffers} from '../../store/reducer.ts';
 
 function MainPage(): JSX.Element {
   function getPlacesText(count: number): string {
@@ -27,7 +28,7 @@ function MainPage(): JSX.Element {
   const [sortingMode, setSortingMode] = useState<SortingMode>('Popular');
   const dispatch = useDispatch();
   const activeCity = useAppSelector((state) => state.activeCity);
-  const activeOffers = useAppSelector((state) => state.offers);
+  const activeOffers = useAppSelector(selectOffers);
 
   const filteredOffers = activeOffers.filter((offer) => offer.city.name === activeCity.name);
   const sortedOffers = filteredOffers.sort((first, second) => {

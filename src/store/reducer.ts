@@ -1,4 +1,4 @@
-﻿import {createReducer} from '@reduxjs/toolkit';
+﻿import {createEntityAdapter, createReducer, EntityState} from '@reduxjs/toolkit';
 import {
   setActiveCity,
   setOffers,
@@ -15,27 +15,28 @@ import {Offer} from '../types/offer.ts';
 import {City} from '../types/city.ts';
 import {Review} from '../types/review.ts';
 
-type InitialState = {
+const offerAdapter = createEntityAdapter<PreviewOffer>();
+
+export const { selectAll: selectOffers, selectEntities: selectOffersIds } = offerAdapter.getSelectors();
+
+type InitialState = EntityState<PreviewOffer> & {
   activeCity: City;
-  offers: PreviewOffer[];
   isLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   offer: Offer | null;
-  offersNearby: PreviewOffer[];
+  offersNearby: string[];
   email: string;
-  favorites: PreviewOffer[];
   reviews: Review[];
 }
 
 const initialState: InitialState = {
+  ...offerAdapter.getInitialState(),
   activeCity: CitiesMock.find((city) => city.name === 'Paris') ?? CitiesMock[0],
-  offers: [],
   isLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   offer: null,
   offersNearby: [],
   email: '',
-  favorites: [],
   reviews: [],
 };
 
@@ -45,7 +46,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.activeCity = action.payload;
     })
     .addCase(setOffers, (state, action) => {
-      state.offers = action.payload;
+      offerAdapter.upsertMany(state, action.payload);
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;
@@ -57,28 +58,22 @@ const reducer = createReducer(initialState, (builder) => {
       state.offer = action.payload;
     })
     .addCase(setOffersNearby, (state, action) => {
-      state.offersNearby = action.payload;
+      offerAdapter.upsertMany(state, action.payload);
+      state.offersNearby = action.payload.map((x) => x.id);
     })
     .addCase(setUserEmail, (state, action) => {
       state.email = action.payload;
     })
     .addCase(setFavorites, (state, action) => {
-      state.favorites = action.payload;
+      offerAdapter.upsertMany(state, action.payload);
     })
     .addCase(setFavoriteStatus, (state, action) => {
-      const offer = state.offers.find((x) => x.id === action.payload.id);
+      const id = action.payload.id;
+      const offer = state.entities[id];
       if (offer) {
         offer.isFavorite = action.payload.status;
       }
-      const nearbyOffer = state.offersNearby.find((x) => x.id === action.payload.id);
-      if (nearbyOffer) {
-        nearbyOffer.isFavorite = action.payload.status;
-      }
-      const favoriteOffer = state.offersNearby.find((x) => x.id === action.payload.id);
-      if (favoriteOffer) {
-        favoriteOffer.isFavorite = action.payload.status;
-      }
-      if (action.payload.id === state.offer?.id) {
+      if (id === state.offer?.id) {
         state.offer.isFavorite = action.payload.status;
       }
     })

@@ -1,10 +1,11 @@
 ﻿import {Review} from '../types/review.ts';
+import {memo} from 'react';
 
 type ReviewCardProps = {
   review: Review;
 }
 
-export function ReviewCard({review}: ReviewCardProps) {
+function ReviewCardInternal({review}: ReviewCardProps) {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -36,3 +37,5 @@ export function ReviewCard({review}: ReviewCardProps) {
     </li>
   );
 }
+
+export const ReviewCard = memo(ReviewCardInternal);

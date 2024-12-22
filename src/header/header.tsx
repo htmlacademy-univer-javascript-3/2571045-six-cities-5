@@ -2,10 +2,12 @@
 import {AppRoute, AuthorizationStatus} from '../const.ts';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '../store/action.ts';
+import {selectFavoriteCount} from '../store/selectors.ts';
 
 export function Header(){
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
+  const favoritesCount = useAppSelector(selectFavoriteCount);
   const email = useAppSelector((state) => state.email);
 
   return (
@@ -31,7 +33,7 @@ export function Header(){
                   <Link to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper" />
                     <span className="header__user-name user__name">{email}</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favoritesCount}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item" onClick={() => {

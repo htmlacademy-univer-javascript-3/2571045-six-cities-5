@@ -22,8 +22,6 @@ export const setFavorites = createAction<PreviewOffer[]>('setFavorites');
 
 export const setFavoriteStatus = createAction<{id: string; status: boolean}>('setFavoriteStatus');
 
-export const setReviews = createAction<Review[]>('setReviews');
-
 export const setLoadingStatus = createAction<boolean>('setLoadingStatus');
 
 export const setUserEmail = createAction<string>('setUserEmail');

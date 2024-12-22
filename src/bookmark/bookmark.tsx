@@ -36,9 +36,9 @@ export function Bookmark({ offerId, isFavorite, type, width, height }: BookmarkP
     }
 
     if (isFavorite) {
-      dispatch(removeOfferFavoriteStatus(offerId));
+      dispatch(removeOfferFavoriteStatus(offerId)).unwrap();
     } else {
-      dispatch(setOfferFavoriteStatus(offerId));
+      dispatch(setOfferFavoriteStatus(offerId)).unwrap();
     }
   }, [authorizationStatus, isFavorite, offerId, navigate, dispatch]);
 

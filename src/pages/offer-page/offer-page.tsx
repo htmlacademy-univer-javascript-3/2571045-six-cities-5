@@ -11,6 +11,7 @@ import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {Header} from '../../header/header.tsx';
 import {PreviewOffer} from '../../types/previewOffer.ts';
 import {Bookmark} from '../../bookmark/bookmark.tsx';
+import {selectNearbyOffers} from '../../store/selectors.ts';
 
 export function OfferPage(){
   const params = useParams();
@@ -19,7 +20,7 @@ export function OfferPage(){
   const navigate = useNavigate();
 
   const reviews = useAppSelector((state) => state.reviews);
-  const offersNearby = useAppSelector((state) => state.offersNearby.slice(0, 3));
+  const offersNearby = useAppSelector(selectNearbyOffers).slice(0, 3);
   const offer = useAppSelector((state) => state.offer);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 

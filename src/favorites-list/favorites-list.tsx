@@ -4,10 +4,11 @@ import {CityFavorites} from './city-favorites.tsx';
 import {CitiesNames} from '../types/city.ts';
 import {fetchFavoritesAction} from '../store/action.ts';
 import {useEffect} from 'react';
+import {selectFavorites} from '../store/selectors.ts';
 
 export function FavoritesList() {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.favorites);
+  const offers = useAppSelector(selectFavorites);
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
@@ -20,7 +21,9 @@ export function FavoritesList() {
           <CityFavorites
             key={currentCity}
             city={currentCity as CitiesNames}
-            cityOffers={offers.filter((offer) => offer.city.name === currentCity)}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            cityOffers={offers.filter((offer) => offer && offer.city.name === currentCity)}
           />
         ))
       }

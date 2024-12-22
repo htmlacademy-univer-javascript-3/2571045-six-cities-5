@@ -6,13 +6,14 @@ import {
   requireAuthorization,
   setOffer,
   setOffersNearby,
-  setUserEmail, setFavorites
+  setUserEmail, setFavorites, setFavoriteStatus, fetchReviewsAction, AddReviewAction
 } from './action.ts';
 import {PreviewOffer} from '../types/previewOffer.ts';
 import {CitiesMock} from '../mocks/cities.ts';
 import {AuthorizationStatus} from '../const.ts';
 import {Offer} from '../types/offer.ts';
 import {City} from '../types/city.ts';
+import {Review} from '../types/review.ts';
 
 type InitialState = {
   activeCity: City;
@@ -23,6 +24,7 @@ type InitialState = {
   offersNearby: PreviewOffer[];
   email: string;
   favorites: PreviewOffer[];
+  reviews: Review[];
 }
 
 const initialState: InitialState = {
@@ -34,6 +36,7 @@ const initialState: InitialState = {
   offersNearby: [],
   email: '',
   favorites: [],
+  reviews: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -61,6 +64,29 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavorites, (state, action) => {
       state.favorites = action.payload;
+    })
+    .addCase(setFavoriteStatus, (state, action) => {
+      const offer = state.offers.find((x) => x.id === action.payload.id);
+      if (offer) {
+        offer.isFavorite = action.payload.status;
+      }
+      const nearbyOffer = state.offersNearby.find((x) => x.id === action.payload.id);
+      if (nearbyOffer) {
+        nearbyOffer.isFavorite = action.payload.status;
+      }
+      const favoriteOffer = state.offersNearby.find((x) => x.id === action.payload.id);
+      if (favoriteOffer) {
+        favoriteOffer.isFavorite = action.payload.status;
+      }
+      if (action.payload.id === state.offer?.id) {
+        state.offer.isFavorite = action.payload.status;
+      }
+    })
+    .addCase(fetchReviewsAction.fulfilled, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(AddReviewAction.fulfilled, (state, action) => {
+      state.reviews.push(action.payload);
     });
 });
 

@@ -35,6 +35,8 @@ export enum APIRoute {
   Favorite = '/favorite',
   Offer = '/offers/:id',
   OffersNearby = '/offers/:id/nearby',
+  OfferFavoriteStatus = '/favorite/:offerId/:status',
+  Reviews = 'comments/:offerId',
 }
 
 export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';

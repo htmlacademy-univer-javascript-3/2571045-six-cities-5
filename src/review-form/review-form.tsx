@@ -41,6 +41,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
           value={5}
           id="5-stars"
           type="radio"
+          checked={rating === 5}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
         />
         <label
@@ -57,6 +58,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
           name="rating"
           value={4}
           id="4-stars"
+          checked={rating === 4}
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
         />
@@ -74,6 +76,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
           name="rating"
           value={3}
           id="3-stars"
+          checked={rating === 3}
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
         />
@@ -91,6 +94,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
           name="rating"
           value={2}
           id="2-stars"
+          checked={rating === 3}
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
         />
@@ -108,6 +112,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
           name="rating"
           value={1}
           id="1-star"
+          checked={rating === 1}
           type="radio"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(Number(event.target.value))}
         />
@@ -138,7 +143,7 @@ export function ReviewForm({onSubmit}: ReviewFormProps) {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={false}
+          disabled={comment.length < 50 || comment.length > 300 || rating === 0}
           onClick={(event) => handleSubmit(event)}
         >
           Submit

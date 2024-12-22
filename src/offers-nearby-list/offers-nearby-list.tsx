@@ -12,7 +12,7 @@ export function OffersNearbyList({offers, onItemHover}: OfferNearbyProps): JSX.E
     <div className="near-places__list places__list">
       {offers.map((offer) => (
         <OfferCard
-          {...offer}
+          offer={offer}
           key={offer.id}
           cardType='CitiesCard'
           onChangeActiveCardId={(id) => onItemHover?.call(null, id)}

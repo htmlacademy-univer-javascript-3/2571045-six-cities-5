@@ -1,9 +1,11 @@
-﻿import {useAppSelector} from '../hooks';
+﻿import {useAppDispatch, useAppSelector} from '../hooks';
 import {AppRoute, AuthorizationStatus} from '../const.ts';
 import {Link} from 'react-router-dom';
+import {logoutAction} from '../store/action.ts';
 
 export function Header(){
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
   const email = useAppSelector((state) => state.email);
 
   return (
@@ -32,7 +34,10 @@ export function Header(){
                     <span className="header__favorite-count">3</span>
                   </Link>
                 </li>
-                <li className="header__nav-item">
+                <li className="header__nav-item" onClick={() => {
+                  dispatch(logoutAction());
+                }}
+                >
                   <Link to={AppRoute.Login}>
                     <span className="header__signout">Sign out</span>
                   </Link>

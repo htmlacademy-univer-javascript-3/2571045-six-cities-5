@@ -6,19 +6,8 @@ import {OfferPage} from '../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import FavoritesPage from '../pages/favorites-page/favorites-page.tsx';
-import {ReviewsMock} from '../mocks/reviews.ts';
-import {useAppSelector} from '../hooks';
-import {Spinner} from '../spinner/spinner.tsx';
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isLoading);
-
-  if (isOffersDataLoading) {
-    return (
-      <Spinner />
-    );
-  }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -33,12 +22,12 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute>
+            <PrivateRoute >
               <FavoritesPage />
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage initialReviews={ReviewsMock} />} />
+        <Route path={AppRoute.Offer} element={<OfferPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

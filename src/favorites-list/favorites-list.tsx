@@ -11,7 +11,7 @@ export function FavoritesList() {
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
-  }, [dispatch, offers]);
+  }, [dispatch]);
 
   return (
     <ul className="favorites__list">

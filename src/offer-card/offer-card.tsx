@@ -1,42 +1,55 @@
-﻿import {OfferTypes} from '../types/offer.ts';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../const.ts';
+﻿import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../const.ts';
 import {Nullable} from 'vitest';
+import {useAppDispatch, useAppSelector} from '../hooks';
+import {PreviewOffer} from '../types/previewOffer.ts';
+import {memo, useCallback} from 'react';
+import {removeOfferFavoriteStatus, setOfferFavoriteStatus} from '../store/action.ts';
+import {CardTypes} from '../types/offer.ts';
+import cn from 'classnames';
+import {Bookmark} from '../bookmark/bookmark.tsx';
 
-type CardTypes = 'CitiesCard' | 'FavoritesCard' | 'NearbyCard';
 type OfferCardProps = {
-  id: string;
-  title: string;
-  type: OfferTypes;
-  price: number;
-  isPremium: boolean;
-  rating: number;
-  previewImage: string;
+  offer: PreviewOffer;
   cardType: CardTypes;
   onChangeActiveCardId?: (id: Nullable<string>) => void;
 };
 
-export default function OfferCard({id, isPremium, previewImage, price, rating, title, type, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
-  const urlSingleOffer = AppRoute.Offer.replace(':id', id);
+const getCardClassName = (cType: CardTypes): string => {
+  switch (cType) {
+    case 'CitiesCard':
+      return 'cities__card';
+    case 'FavoritesCard':
+      return 'favorites__card';
+    default:
+      return 'near-places__card';
+  }
+};
 
-  const getCardClassName = (cType: CardTypes): string => {
-    switch (cType) {
-      case 'CitiesCard':
-        return 'cities__card place-card';
-      case 'FavoritesCard':
-        return 'favorites__card place-card';
-      default:
-        return 'near-places__card place-card';
+function OfferCardInternal({offer, cardType, onChangeActiveCardId}: OfferCardProps): JSX.Element {
+  const urlSingleOffer = AppRoute.Offer.replace(':id', offer.id);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  useCallback(() => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
     }
-  };
 
+    if (offer.isFavorite) {
+      dispatch(removeOfferFavoriteStatus(offer.id));
+    } else {
+      dispatch(setOfferFavoriteStatus(offer.id));
+    }
+  }, [authorizationStatus, offer.isFavorite, offer.id, navigate, dispatch]);
   return (
     <article
-      className={getCardClassName(cardType)}
-      onMouseOver={() => onChangeActiveCardId?.call(null, id)}
+      className={cn(getCardClassName(cardType), 'place-card')}
+      onMouseOver={() => onChangeActiveCardId?.call(null, offer.id)}
       onMouseLeave={() => onChangeActiveCardId?.call(null, null)}
     >
-      {isPremium &&
+      {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
@@ -44,7 +57,7 @@ export default function OfferCard({id, isPremium, previewImage, price, rating, t
         <Link to={urlSingleOffer}>
           <img
             className="place-card__image"
-            src={previewImage}
+            src={offer.previewImage}
             width={260}
             height={200}
             alt="Place image"
@@ -54,27 +67,26 @@ export default function OfferCard({id, isPremium, previewImage, price, rating, t
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{price}</b>
+            <b className="place-card__price-value">€{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width={18} height={19}>
-              <use xlinkHref="#icon-bookmark"/>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <Bookmark height={19} isFavorite={offer.isFavorite} offerId={offer.id} type="CitiesBookmark" width={18} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}}/>
+            <span style={{width: `${offer.rating * 20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={urlSingleOffer}>{title}</Link>
+          <Link to={urlSingleOffer}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
 }
+
+const OfferCard = memo(OfferCardInternal);
+
+export default OfferCard;

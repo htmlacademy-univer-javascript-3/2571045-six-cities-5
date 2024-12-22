@@ -1,49 +1,51 @@
 ﻿import {ReviewForm} from '../../review-form/review-form.tsx';
-import {Review} from '../../types/review.ts';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {ReviewCard} from '../../review-card/review-card.tsx';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Map} from '../../map/map.tsx';
 import {OffersNearbyList} from '../../offers-nearby-list/offers-nearby-list.tsx';
-import {Nullable} from 'vitest';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchOfferAction} from '../../store/action.ts';
+import {AddReviewAction, fetchOfferAction, fetchReviewsAction} from '../../store/action.ts';
 import {Spinner} from '../../spinner/spinner.tsx';
-import {AppRoute} from '../../const.ts';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {Header} from '../../header/header.tsx';
+import {PreviewOffer} from '../../types/previewOffer.ts';
+import {Bookmark} from '../../bookmark/bookmark.tsx';
 
-type OfferPageProps = {
-  initialReviews: Review[];
-}
-
-export function OfferPage({initialReviews}: OfferPageProps){
+export function OfferPage(){
   const params = useParams();
   const offerId = params.id;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [reviews, setReviews] = useState<Review[]>(initialReviews);
-  const [selectedId, setSelectedId] = useState<Nullable<string>>();
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const points = offersNearby.map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
+  const reviews = useAppSelector((state) => state.reviews);
+  const offersNearby = useAppSelector((state) => state.offersNearby.slice(0, 3));
+  const offer = useAppSelector((state) => state.offer);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const addReview = (newReview: Review) => {
-    setReviews((prevReviews) => [...prevReviews, newReview]);
+  const addReview = (newReview: {comment: string; rating: number}) => {
+    const id = offer?.id;
+    if (id){
+      dispatch(AddReviewAction({...newReview, id}));
+    }
   };
 
   useEffect(() => {
     if (offerId) {
       dispatch(fetchOfferAction(offerId))
         .unwrap()
-        .catch(() => navigate(AppRoute.NotFound));
+        .catch(() => navigate(AppRoute.NotFound))
+        .then(() => dispatch(fetchReviewsAction(offerId)));
     }
   }, [dispatch, navigate, offerId]);
-
-  const offer = useAppSelector((state) => state.offer);
 
   if (!offer) {
     return (<Spinner />);
   }
+
+  const points = offersNearby
+    .concat(offer as PreviewOffer)
+    .map((o) => ({ title: o.id, lat: o.location.latitude, lng: o.location.longitude }));
 
   return (
     <div className="page">
@@ -72,12 +74,7 @@ export function OfferPage({initialReviews}: OfferPageProps){
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <Bookmark height={33} isFavorite={offer.isFavorite} offerId={offer.id} type="OfferBookmark" width={31} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -133,14 +130,14 @@ export function OfferPage({initialReviews}: OfferPageProps){
                 <ul className="reviews__list">
                   {reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
                 </ul>
-                <ReviewForm onSubmit={addReview} />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm onSubmit={addReview} />}
               </section>
             </div>
           </div>
           <Map
             city={offer.city}
             points={points}
-            selectedPoint={points.find((p) => p.title === selectedId)}
+            selectedPoint={points.find((p) => p.title === offer.id)}
           />
         </section>
         <div className="container">
@@ -148,7 +145,7 @@ export function OfferPage({initialReviews}: OfferPageProps){
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersNearbyList offers={offersNearby} onItemHover={setSelectedId}/>
+            <OffersNearbyList offers={offersNearby} />
           </section>
         </div>
       </main>

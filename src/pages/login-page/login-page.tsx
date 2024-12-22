@@ -1,33 +1,34 @@
 ﻿import React, {useEffect, useState} from 'react';
 import { Header } from '../../header/header.tsx';
 import {Link, useNavigate} from 'react-router-dom';
-import {checkAuthAction, requireAuthorization, setUserEmail} from '../../store/action.ts';
+import {checkAuthAction, loginAction} from '../../store/action.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../const.ts';
-import {useDispatch} from 'react-redux';
+import {AuthData} from '../../types/auth-data.ts';
 
 function LoginPage() {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  const dispatch = useDispatch();
   const isAuthenticated = useAppSelector((state) => state.authorizationStatus === AuthorizationStatus.Auth);
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const activeCity = useAppSelector((state) => state.activeCity);
 
   useEffect(() => {
     appDispatch(checkAuthAction());
-  }, [appDispatch]);
-
-
-  if (isAuthenticated) {
-    navigate('/');
-    return null;
-  }
+    if (isAuthenticated) {
+      navigate(AppRoute.Root);
+    }
+  }, [appDispatch, isAuthenticated, navigate]);
 
   const isValidPassword = (pass: string) => /[a-zA-Z]/.test(pass) && /\d/.test(pass);
+
+  const getAuthData : () => AuthData = () => ({
+    login: email,
+    password: password
+  } as AuthData);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,8 +43,7 @@ function LoginPage() {
       return;
     }
 
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(setUserEmail(email));
+    appDispatch(loginAction(getAuthData()));
     navigate('/');
   };
 

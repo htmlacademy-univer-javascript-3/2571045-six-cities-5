@@ -20,7 +20,7 @@ export function CityFavorites({city, cityOffers}: CityFavoritesProps): JSX.Eleme
       <div className="favorites__places">
         {cityOffers.map((offer) => (
           <OfferCard
-            {...offer}
+            offer={offer}
             key={offer.id}
             cardType='FavoritesCard'
           />

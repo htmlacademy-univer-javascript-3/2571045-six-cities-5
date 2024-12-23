@@ -20,8 +20,6 @@ export function FavoritesList() {
           <CityFavorites
             key={currentCity}
             city={currentCity}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             cityOffers={offers.filter((offer) => offer && offer.city.name === currentCity)}
           />
         ))

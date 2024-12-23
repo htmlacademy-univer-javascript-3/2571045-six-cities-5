@@ -1,16 +1,16 @@
-﻿import {ReviewForm} from '../../review-form/review-form.tsx';
+﻿import {ReviewForm} from '../../components/review-form/review-form.tsx';
 import {useEffect} from 'react';
-import {ReviewCard} from '../../review-card/review-card.tsx';
+import {ReviewCard} from '../../components/review-card/review-card.tsx';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Map} from '../../map/map.tsx';
-import {OffersNearbyList} from '../../offers-nearby-list/offers-nearby-list.tsx';
+import {Map} from '../../components/map/map.tsx';
+import {OffersNearbyList} from '../../components/offers-nearby-list/offers-nearby-list.tsx';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AddReviewAction, fetchOfferAction, fetchReviewsAction} from '../../store/action.ts';
-import {Spinner} from '../../spinner/spinner.tsx';
+import {Spinner} from '../../components/spinner/spinner.tsx';
 import {AppRoute, AuthorizationStatus} from '../../const.ts';
-import {Header} from '../../header/header.tsx';
+import {Header} from '../../components/header/header.tsx';
 import {PreviewOffer} from '../../types/previewOffer.ts';
-import {Bookmark} from '../../bookmark/bookmark.tsx';
+import {Bookmark} from '../../components/bookmark/bookmark.tsx';
 import {selectNearbyOffers} from '../../store/selectors.ts';
 
 export function OfferPage(){
@@ -129,7 +129,7 @@ export function OfferPage(){
                   Reviews · <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
+                  {reviews.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10).map((review) => <ReviewCard key={review.id} review={review} />)}
                 </ul>
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm onSubmit={addReview} />}
               </section>

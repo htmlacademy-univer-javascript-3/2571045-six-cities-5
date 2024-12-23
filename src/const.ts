@@ -1,4 +1,5 @@
 ﻿import {SortingMode} from './types/sorting-mode.ts';
+import {CitiesNames} from './types/city.ts';
 
 export enum AppRoute {
   Login = '/login',
@@ -14,7 +15,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const Cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const Cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as CitiesNames[];
 
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';

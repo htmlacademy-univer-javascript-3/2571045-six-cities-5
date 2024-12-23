@@ -1,6 +1,6 @@
-﻿import {City} from '../types/city.ts';
+﻿import {City} from '../../types/city.ts';
 
-export const CitiesMock: City[] = [
+export const CITIES: City[] = [
   {
     name: 'Paris',
     location: {

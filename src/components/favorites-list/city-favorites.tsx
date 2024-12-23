@@ -1,6 +1,6 @@
 ﻿import OfferCard from '../offer-card/offer-card.tsx';
-import {PreviewOffer} from '../types/previewOffer.ts';
-import {CitiesNames} from '../types/city.ts';
+import {PreviewOffer} from '../../types/previewOffer.ts';
+import {CitiesNames} from '../../types/city.ts';
 
 type CityFavoritesProps = {
   city: CitiesNames;

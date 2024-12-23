@@ -1,8 +1,8 @@
-﻿import {City} from '../types/city.ts';
-import {CitiesMock} from '../mocks/cities.ts';
+﻿import {CitiesNames, City} from '../../types/city.ts';
+import {CITIES} from './CITIES.ts';
 
 type CitiesListProps = {
-  cities: string[];
+  cities: CitiesNames[];
   activeCity: { name: string };
   onCityChange: (city: City) => void;
 };
@@ -18,7 +18,7 @@ export function CitiesList({ cities, activeCity, onCityChange }: CitiesListProps
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                onCityChange(CitiesMock.find((newCity) => newCity.name === city) ?? CitiesMock[0]);
+                onCityChange(CITIES.find((newCity: City) => newCity.name === city) ?? CITIES[0]);
               }}
             >
               <span>{city}</span>

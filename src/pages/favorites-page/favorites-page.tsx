@@ -1,5 +1,5 @@
-﻿import {FavoritesList} from '../../favorites-list/favorites-list.tsx';
-import {Header} from '../../header/header.tsx';
+﻿import {FavoritesList} from '../../components/favorites-list/favorites-list.tsx';
+import {Header} from '../../components/header/header.tsx';
 
 function FavoritesPage() {
   return (

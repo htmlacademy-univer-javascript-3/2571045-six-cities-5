@@ -9,7 +9,7 @@ import {
   setUserEmail, setFavorites, setFavoriteStatus, fetchReviewsAction, AddReviewAction
 } from './action.ts';
 import {PreviewOffer} from '../types/previewOffer.ts';
-import {CitiesMock} from '../mocks/cities.ts';
+import {CITIES} from '../components/cities-list/CITIES.ts';
 import {AuthorizationStatus} from '../const.ts';
 import {Offer} from '../types/offer.ts';
 import {City} from '../types/city.ts';
@@ -31,7 +31,7 @@ type InitialState = EntityState<PreviewOffer> & {
 
 const initialState: InitialState = {
   ...offerAdapter.getInitialState(),
-  activeCity: CitiesMock.find((city) => city.name === 'Paris') ?? CitiesMock[0],
+  activeCity: CITIES.find((city) => city.name === 'Paris') ?? CITIES[0],
   isLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   offer: null,

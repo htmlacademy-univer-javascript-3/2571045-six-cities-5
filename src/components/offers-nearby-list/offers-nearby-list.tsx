@@ -1,6 +1,6 @@
 ﻿import OfferCard from '../offer-card/offer-card.tsx';
 import {Nullable} from 'vitest';
-import {PreviewOffer} from '../types/previewOffer.ts';
+import {PreviewOffer} from '../../types/previewOffer.ts';
 
 type OfferNearbyProps = {
   offers: PreviewOffer[];

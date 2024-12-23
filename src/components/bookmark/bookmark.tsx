@@ -1,8 +1,8 @@
-﻿import {BookmarkTypes} from '../types/offer.ts';
+﻿import {BookmarkTypes} from '../../types/offer.ts';
 import {useCallback} from 'react';
-import {AppRoute, AuthorizationStatus} from '../const.ts';
-import {removeOfferFavoriteStatus, setOfferFavoriteStatus} from '../store/action.ts';
-import {useAppDispatch, useAppSelector} from '../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
+import {removeOfferFavoriteStatus, setOfferFavoriteStatus} from '../../store/action.ts';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useNavigate} from 'react-router-dom';
 import cn from 'classnames';
 

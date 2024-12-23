@@ -1,11 +1,11 @@
 ﻿import {Link, useNavigate} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../const.ts';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {Nullable} from 'vitest';
-import {useAppDispatch, useAppSelector} from '../hooks';
-import {PreviewOffer} from '../types/previewOffer.ts';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {PreviewOffer} from '../../types/previewOffer.ts';
 import {memo, useCallback} from 'react';
-import {removeOfferFavoriteStatus, setOfferFavoriteStatus} from '../store/action.ts';
-import {CardTypes} from '../types/offer.ts';
+import {removeOfferFavoriteStatus, setOfferFavoriteStatus} from '../../store/action.ts';
+import {CardTypes} from '../../types/offer.ts';
 import cn from 'classnames';
 import {Bookmark} from '../bookmark/bookmark.tsx';
 

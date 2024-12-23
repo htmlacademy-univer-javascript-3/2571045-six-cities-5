@@ -1,8 +1,8 @@
-﻿import {useAppDispatch, useAppSelector} from '../hooks';
-import {AppRoute, AuthorizationStatus} from '../const.ts';
+﻿import {useAppDispatch, useAppSelector} from '../../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {Link} from 'react-router-dom';
-import {logoutAction} from '../store/action.ts';
-import {selectFavoriteCount} from '../store/selectors.ts';
+import {logoutAction} from '../../store/action.ts';
+import {selectFavoriteCount} from '../../store/selectors.ts';
 
 export function Header(){
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);

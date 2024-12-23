@@ -1,5 +1,5 @@
 ﻿import React, {useEffect, useState} from 'react';
-import { Header } from '../../header/header.tsx';
+import { Header } from '../../components/header/header.tsx';
 import {Link, useNavigate} from 'react-router-dom';
 import {checkAuthAction, loginAction} from '../../store/action.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks';

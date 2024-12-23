@@ -1,19 +1,20 @@
-﻿import OfferList from '../../offer-list/offer-list.tsx';
+﻿import OfferList from '../../components/offer-list/offer-list.tsx';
 import {Nullable} from 'vitest';
 import {useState} from 'react';
-import {Map} from '../../map/map.tsx';
+import {Map} from '../../components/map/map.tsx';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../../hooks';
 import {Point} from '../../types/point.ts';
 import {setActiveCity} from '../../store/action.ts';
-import {CitiesList} from '../../cities-list/cities-list.tsx';
+import {CitiesList} from '../../components/cities-list/cities-list.tsx';
 import {Cities} from '../../const.ts';
 import {City} from '../../types/city.ts';
 import {SortingMode} from '../../types/sorting-mode.ts';
-import {SortingModes} from '../../sorting-modes/sorting-modes.tsx';
-import {Spinner} from '../../spinner/spinner.tsx';
-import {Header} from '../../header/header.tsx';
+import {SortingModes} from '../../components/sorting-modes/sorting-modes.tsx';
+import {Spinner} from '../../components/spinner/spinner.tsx';
+import {Header} from '../../components/header/header.tsx';
 import {selectOffers} from '../../store/reducer.ts';
+import {EmptyOffersList} from '../../components/empty-offers-list/empty-offers-list.tsx';
 
 function MainPage(): JSX.Element {
   function getPlacesText(count: number): string {
@@ -68,29 +69,30 @@ function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${filteredOffers.length === 0 && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList cities={Cities} activeCity={activeCity} onCityChange={handleCityChange} />
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} {getPlacesText(filteredOffers.length)} to stay in {activeCity.name}</b>
-              <SortingModes onModeChange={handleSortModeChange} />
-              <OfferList offers = {sortedOffers} onItemHover={setSelectedOfferId}/>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={activeCity}
-                  points={points}
-                  selectedPoint={points.find((p) => p.title === selectedOfferId)}
-                />
+          { filteredOffers.length === 0 ? <EmptyOffersList currentCity={activeCity.name}/> :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{filteredOffers.length} {getPlacesText(filteredOffers.length)} to stay in {activeCity.name} </b>
+                <SortingModes onModeChange={handleSortModeChange}/>
+                <OfferList offers={sortedOffers} onItemHover={setSelectedOfferId}/>
               </section>
-            </div>
-          </div>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map
+                    city={activeCity}
+                    points={points}
+                    selectedPoint={points.find((p) => p.title === selectedOfferId)}
+                  />
+                </section>
+              </div>
+            </div>}
         </div>
       </main>
     </div>

@@ -1,8 +1,8 @@
 ﻿import {Navigate} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../const.ts';
-import {useAppDispatch, useAppSelector} from '../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect, useState} from 'react';
-import {checkAuthAction} from '../store/action.ts';
+import {checkAuthAction} from '../../store/action.ts';
 import {Spinner} from '../spinner/spinner.tsx';
 
 type PrivateRouteProps = {

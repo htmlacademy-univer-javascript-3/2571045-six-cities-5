@@ -1,4 +1,4 @@
-﻿import {Review} from '../types/review.ts';
+﻿import {Review} from '../../types/review.ts';
 import {memo} from 'react';
 
 type ReviewCardProps = {

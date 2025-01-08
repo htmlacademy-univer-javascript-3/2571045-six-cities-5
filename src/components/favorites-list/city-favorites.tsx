@@ -12,9 +12,9 @@ export function CityFavorites({city, cityOffers}: CityFavoritesProps): JSX.Eleme
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <div className="locations__item-link">
             <span>{city}</span>
-          </a>
+          </div>
         </div>
       </div>
       <div className="favorites__places">

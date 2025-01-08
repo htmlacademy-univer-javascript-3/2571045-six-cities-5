@@ -1,5 +1,7 @@
 ﻿import {FavoritesList} from '../../components/favorites-list/favorites-list.tsx';
 import {Header} from '../../components/header/header.tsx';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const.ts';
 
 function FavoritesPage() {
   return (
@@ -14,7 +16,7 @@ function FavoritesPage() {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to={AppRoute.Root}>
           <img
             className="footer__logo"
             src="../../img/logo.svg"
@@ -22,7 +24,7 @@ function FavoritesPage() {
             width={64}
             height={33}
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );
